@@ -1,0 +1,645 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>AIML</title>
+  <!-- This whole presentation was made with Big: https://github.com/tmcw/big -->
+  
+  <link href="../big/big.css" rel="stylesheet" type="text/css" />
+  <script src="../big/big.js"></script>
+  <link href="../big/themes/lightWhite.css" rel="stylesheet" type="text/css" />
+
+  <!-- Favicon link below, via https://emojitofavicon.com -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🍴</text></svg>"></link>
+  
+  <style>
+    body {
+      background-color: #EDDD6E;
+      font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+      /* font-weight: 700;*/
+      margin: 0;
+      padding: 0;
+      font-style: normal;
+      font-size: 21px;
+    }
+
+
+      .bg-star {
+          background-image: url('stars.png');
+          background-size: cover;
+          background-repeat: no-repeat;
+
+      }
+</style>
+
+  </style>
+  
+</head>
+<body>
+
+  <div>
+    AIML
+    <br />
+    Lecture 01
+    <br />
+    Unit Introduction 👋
+  </div>
+    
+  <div>Welcome 👩‍🎤🧑‍🎤👨‍🎤</div>
+
+  <div> First of all, don't forget to confirm your attendence on <a href="https://www.arts.ac.uk/study-at-ual/course-regulations/attendance-policy/attendance-monitoring"> SEAtS App!  </a></div>
+
+  
+  <div>
+					Hi 👋 We are Xiaowan, Teo and Femi 
+	</div>
+        
+  <!-- Unit logistics -->
+  <div>
+    <p>This is MLAI unit for MSc</p>
+            
+    <p>We'll see you every Wednesday morning at HH_308 😎 </p>
+    <p> (We might swap our lecture time to Tuesday PM starting from Week 3, I'll update once confirmed)</p>
+
+  </div>
+        
+
+        
+  <!-- Goal of this lecture -->
+  <div>
+      <h2>In the next four hours, we'll have learnt about: </h2>
+      <p>1. what this unit is about?</p>
+      <p>2. who we are?</p>
+      <p>3. what machine learning is about? is it cool? what you can do with it?</p>
+      <p>4. Python and maths warmup (things you have learned already):</p>
+      <p> - Linear algebra & Probability, Information theory, Derivatives </p>
+    </div>
+  </div>
+
+<!-- Goal of this unit -->
+  <div>
+    <p>What is this unit about?</p>
+    <p>A combination of theory and practice around ML/AI, </p>
+    <p>with <b>cool ML projects</b> developed <b>by ourselves</b></p>
+  </div>
+
+<div>
+    <h2>Our promise</h2>
+    <h3>By the end of this unit, you will have:</h3>
+    <p>- an understanding of machine learning and artificial intelligence methodology (know the tool 🔬🔭) </p>
+    <p>- an insight for identifying machine learning problems in real-world applications (know the environment🌍🌎🌏) </p>
+  <p>- a full-stack AI/ML engineering proficiency in building and deploying models for real-world applications (apply the tool to contribute to a better environment🤗)  </p>
+  </div>
+
+
+  <div> Few tips from us!
+    <br />  - Shortcut to navigate through this web-based slides (use the page number at the end of the the URL)
+    <br />  - <a href="https://annas-archive.org/">Anna's archive</a>    
+    <br />  - Take good care of yourself in London!  
+    </div>
+
+  <!-- Support --> 
+<div>
+    <h2>How to get support?</h2>
+      <p>- ✌️Reach out to me, Teo and Femi via Slack or Email </p>
+      <p>- 🤘The fun of being an <b>autodidact</b> (google this word which I borrowed from <a href="https://www.joelgethinlewis.com/">Joel</a>): </p>
+      <p>--  <a href="https://www.arts.ac.uk/students/library-services">UAL Library</a>,
+      <a href="https://chat.openai.com/"> LLMs like ChatGPT but be careful</a>, resources listed on our Moodle page, and reference links posted every week (lots of YouTube videos🤗)
+        </p>
+  </div>
+
+  <!-- Assessment --> 
+    <div>
+    <h2>Assessments</h2>
+    <p>Always refer to Moodle for unit specifics, assessment information and deadlines</p>
+          <p>We'll have a look at it together next week!</p>
+  </div>
+
+  <!-- Requirements --> 
+    <div>
+    <h2>To get the best out of this unit</h2>
+    <p >- We expect you to spend <b>20</b> hours every week on this unit. 
+      <br>
+      (4 hours in lecture + 16 hours outside the lecture time for doing homework🧑‍🌾, digging linked resources🧑‍🏭, developing your own ML project🧑‍🎨)</p>
+    <p>- We have a <b>VERY COOL</b> AI lab for your to explore (more on this later) </p>
+      <p>- Repeated exposure, questions and intuitions (more on this later)</p>
+    <p>- Start thinking about the final project early</p>
+  </div>
+
+
+    <!-- Self intro --> 
+  <div>
+    <p>Hi I'm <a href="https://xiaowan-yi.com/">Xiaowan</a> (🗣️sh-iao one)</p>
+    <p>I was born in Chendu, China. We have hotpot 🌶️, panda 🐼 and crazy underground music scenes ⚡️.</p>   
+    <p>I moved to London in 2018 and now I live in south London. </p>   
+    <p>I'm completing my PhD research in AI and Music at Centre for Digital Music, Queen Mary University of London funded by UKRI. </p>
+    <p>I'm a sound artist and you can find some of my works <a href="https://vimeo.com/user65401583">here</a>.</p>
+    <p>I play drums 🥁 for electronic and goovy music. </p>          
+  </div>
+
+              <div>
+    <h4><a href="https://vimeo.com/93213203">This</a> was THE drummer and video that initiated my curiosity about machine learning and machine creativity 9 years ago</h4>
+</div>
+
+        <div>
+    <h2>my weakness...</h2>
+    <p >- I'm a morning person wannabe. Interrupt me whenever you feel that I have not explained something clearly.</p>
+<p >- The field is evolving REALLY fast and I'm constantly learning new stuff in the same way as you do! We are study buddies :) </p>	
+</div>
+
+
+<!-- Introduction to AI and ML: what is --> 
+  <div>
+    <p>Machine Learning and Artificial Intelligence</p>
+  </div>
+
+  <div> 
+Machine Learning vs. Artificial Intelligence: what is the connection and the difference?
+</div>
+
+    <div> 
+  - AI is the broader concept of enabling a machine or system to sense, reason, act, or adapt like a human 
+       <br />   
+  - ML is a subfield of AI (that allows machines to extract knowledge from data and learn from it autonomously)
+</div>
+
+<div>
+- More on the  <a href=" https://www.tableau.com/data-insights/ai/history"> origin of 'AI' </a> 
+<br />  
+- More on the  <a href="https://en.wikipedia.org/wiki/Machine_learning"> origin of 'ML' </a> 
+ 
+</div>
+
+      
+  <div>
+    <h2>What is intelligence? 🤨</h2>
+    <p > It includes the ability to learn, solve complex problems or make decisions with outcomes benefiting the actor</p>
+    <p > and many more...</p>
+  </div>
+
+    <div>
+    <h2>Is intelligence exclusive to human? 🤨</h2>
+    <p > <a href="https://en.wikipedia.org/wiki/Tool_use_by_animals#:~:text=Chimpanzees%20are%20sophisticated%20tool%20users,in%20the%20Republic%20of%20Congo"> A gorilla that uses a stick to test depth of water</a>, 
+  <br /> 
+   <a href="https://www.youtube.com/watch?v=B91tozyQs9M"> A fish that makes art</a>,
+  <br /> 
+   <a href="https://www.youtube.com/watch?v=QKQK7EIcq9Y"> A dog that talks with buttons</a> </p>
+  </div>
+
+        <div>
+    <p>Intelligence is always specific, most of time we are talking about human intelligence 
+<br />          
+(for simplicity, we omit human in the rest of slides)</p>
+  </div>
+
+              <div>
+    <p>My take on intelligence:
+<br />             
+Intelligence is hard to define and it may include learning, task solving in a complex environment and art making capability. 
+<br />          
+Thinking about intelligence is a way of appreciation.
+<br />    
+<a href="https://en.wikipedia.org/wiki/Moravec%27s_paradox">Simple things are hard.</a> </p>
+  </div>
+
+  <div>
+    <h2>Let's move on to artificial intelligence...</h2>
+  </div>
+
+                    <div>
+    <p>Engineering science:
+          <br /> 
+        make tools🔭🚒✈️ —  life gets easier 🫶 </p>
+    <p>Natural science:
+          <br />    
+        discover and explain phenomena🧪💯 — curiosity satisfied ✌️</p>
+  </div>
+
+<div>
+  <p>
+These two subjects can be intertwined. 
+<br /> 
+So does AI! 
+  </p>
+</div>
+
+<div>
+    <p> AI is a tool (as a part of engineering science🔭)
+    <br />     
+      For instance, we can use AI models to translate languages and break the barriers.   
+  </p>
+
+  <p> AI is also our attempt to understand intelligence better (as a part of natural science🧠)
+<br /> 
+“We don’t think we have understood something unless we can build it fRoM sCrACh.”
+    </p>
+</div> 
+
+  <div>
+            <h3> Machine Learning </h3>
+  </div>
+
+  <div >
+            <p> <a href="http://www.acad.bg/ebook/ml/Society%20of%20Mind.pdf#page=25">It can be really hard to explicitly programme the computer to solve tasks with real-life complexity.  </a></p>
+    
+  </div>
+    
+  <div>
+    
+  <p> <b><i>Machine learning</i></b> is a subfield of artificial intelligence that gives computers the ability to learn without explicitly being programmed. It learns from data.</p>       
+  <a href="https://christophm.github.io/interpretable-ml-book/terminology.html"><img width="880" height="444" src="programing-ml.png">
+  </a>
+</div>
+
+<div>
+  <p> <b><i>Machine learning model</i></b> is the product of machine learning, which takes some input, does some process and makes outputs.</p>
+  
+  <p ><span class="fragment highlight-red">Input</span> -> <span class="fragment highlight-blue"> Process </span> -> <span class="fragment highlight-current-green"> Output</span></p>
+
+<p > (we will refer back to this multiple times throughout this unit) </p>
+    
+    
+</div>
+
+
+
+
+        
+<!-- Introduction to ML: applications  --> 
+<div>
+    <h4>Before diving into what ML models are and how they work, let's look at it from the other way: </h4>
+    <p > What can ML models do? </p>
+  
+    <p > ML applications are mainly from two categories: </p>
+  
+  <p > Pattern recognition (more on this later) </p>
+  <p > Pattern generation (what most "popular" AI models are doing nowadays) </p>
+    
+  </div>
+
+      <div>
+  <h2>Some staff-pick ML applications on pattern generation, which are cool</h2>       
+    <p > Generate image from text prompts: <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion"> Stable diffusion</a> (week 9), </p>
+    <p > Generate texts: <a href="https://chat.openai.com/"> ChatGPT</a> (week 6),</p>
+    <p > Generate audio from text prompts: <a href="https://huggingface.co/spaces/facebook/MusicGen">MusicGEN</a> </p>
+</div>
+
+  <!-- Introduction to ML: applications - pattern recognition  --> 
+      <div>
+            <p> On pattern recognition -> </p>
+  </div>
+      
+      <div>
+       <p>  What is <a href="https://www.youtube.com/watch?v=bbLDfueL7eU"> this sound</a>?</p>
+				</div>
+      
+<!-- Introduction to ML: applications - pattern recognition  --> 
+<div>
+            
+  <p> Bring in the video...
+  <br />    
+  How do you feel?  </p>
+</div>
+      
+                   
+<!-- Introduction to ML: applications - pattern recognition  --> 
+<div>                 
+  <p > I want to invite you to imagine us as a group of primitive humans sitting around the bonfire🪵🔥 </p>     
+  <p > Once upon a time... </p>
+</div>
+
+<!-- Introduction to ML: applications - pattern recognition  --> 
+ <div>                 
+<img src="stars.png" />
+</div>
+
+<div>
+      <p > We read the stars! ✨ </p>
+  <p > From there we are then able to predict the passage of seasons,  </p>
+  <p > when to seed and when to harvest crops🌾,  </p>
+  <p > all the way to calculate the planet orbits🪐, to send humans to the sky🧑‍🚀 and every technology development thereafter</p>		
+</div>
+
+<div> 
+    <p>
+Reading star sign is what we call "pattern recognition"!
+  </p>
+</div>
+
+
+<div>
+      <h4> The significance of pattern recognition to humanity </h4>
+    <blockquote>
+      &ldquo; We distinguished predator from prey; and poisonous plants from nourishing ones - enhancing our chance to live and reproduce, and passing on our genes. 
+      We used pattern recognition in astronomy and astrology, where different cultures, recognizing the patterns of stars in the skies, projected different symbols and pictures for constellations.&rdquo;
+    </blockquote>
+<p >
+(— “When Knowledge Conquered Fear”, third episode of Cosmos: A Spacetime Odyssey)   
+</p>
+  </div>
+
+<div>                 
+<h2> Pattern recognition as an essential part of our experience </h2>
+<p >
+Guess the bonfire sound 🔊,
+</p> 
+<p >
+Get on the right tube line🚇, 
+</p>      
+<p >
+Read the words from this slides🧑‍🏫,
+</p>
+<p >
+Appreciate a piece of drawing😻, etc.
+</p> 
+</div>
+
+  <div>                 
+<p >
+Pattern recognition: to find regularity and enable prediction making 🔮 
+</p> 
+<p >
+I think it is very cool if we can program the machine to do pattern recognition:
+</p>      
+<p >
+Few hours of computations by our little metal box
+</p>
+<p >
+~=
+</p> 
+<p >
+Hundreds of thousands of years of human evolution and experience accumulation
+</p>
+<p >
+Shout out to Patrick Winston from <a href="https://youtu.be/Unzc731iCUY?t=2323">this talk </a>
+</p> 
+</div>
+
+
+<div>
+  <h2>Some staff-pick ML applications on pattern recognition, which are undoubtedly cool too</h2>       
+    <p > <a href="https://github.com/tensorflow/tfjs-models/tree/master/pose-detection#example-code-and-demos">Pose detection</a> in <a href="https://research.rhizomatiks.com/s/works/discrete_figures/en/">Discrete Figures</a>, </p>
+    <p > Image classification, object detection, etc, integrated in <a href="https://www.youtube.com/watch?v=bqeQByqf_f8"> Seeing AI app</a>,</p>
+    <p > Face detection in <a href="https://notnot.home.xs4all.nl/pareidolia/pareidolia.html"> Pareidolia*  </a> </p>
+    <p > p.s. look how diverse ML application is! It is one tool that can be applied to (almost) every domain that you like!  </p>
+</div>
+
+      <div>
+  <h2>Let's play with some demo ML web app:</h2>       
+    <p >1. from <a href="https://github.com/tensorflow/tfjs/blob/master/GALLERY.md">TensorFlow.js gallery on github</a> </p>
+    <p >2. from <a href="https://glitch.com/@TensorFlowJS"> TensorFlow.js gallery on Glitch(more on this later)</a> </p>
+    <p > For the next ~20 minutes, choose and play with at least three demo apps that you like🤩😍 </p>
+    <p > and try to make some educated guess on what are the ML elements underneath🥸 </p>    
+</div>
+
+  <!-- Roadmap of ML models covered in this unit (syllabus) --> 
+   
+        <div>
+  <h2>A roadmap of ML/AI models covered in this unit aka unit syllabus</h2>       
+    <p >  Linear regression (week 2) </p>
+    <p > Logistic regression, K-NN, Tree, SVM  (week 3) </p>
+    <p >  MLP, AE, VAE  (week 4) </p>
+        <p >  CNN  (week 5) </p>
+        <p >  RNN, Transformer  (week 6) </p>
+
+</div>
+        
+                      <div>
+  <h2>A roadmap of ML/AI models covered in this unit aka unit syllabus</h2>       
+
+        <p > AI applications in audio and music </a> (week 7) </p>
+        <p >  Guest lecture (week 8) </p>
+        <p > GAN, Diffusion (week 9) </p>
+        <p >  Example applications, final project submission (week 10) </p>
+
+</div>
+      
+
+
+  <div>    
+    <p> Any questions so far?</p>
+</div>
+
+  <!-- Introduction to ML: how we learn  --> 
+      <div>
+  <h4>Here is a formal definition of ML by Tom Mitchell</h4>       
+    <p>A computer program is said to learn from experience <b>E</b> with respect to some class of tasks <b>T</b> and performance measure <b>P</b>, 
+      <br> 
+      if its performance at tasks in <b>T</b>, as measured by <b>P</b>, improves with experience <b>E</b>.</p>
+    <p > I can't memorise this paragraph, but here are some fun connections I draw on how WE learn throughout this unit😎 </p>
+    <p > We'll resume to machine learning shortly 🤘😎 </p>
+</div>
+
+            <div>   
+  <h4>⚡️Cross-disciplinary slide 01: how do we learn?</h4>       
+    <p > <a href="https://www.nature.com/articles/s41598-018-32018-9#Sec14"> Repeated exposure</a> (like Experience <b>E</b> that ML model learns from) </p>
+    <p > It is absolutely fine if something from this unit looks like a hard bite at first sight. We have amazing perceptual adaptation capability that can carry us over through repeated exposure. </p>
+    <p > Repeated exposure: 🫷patience + hands-on practice🫸 </p>           
+</div>
+
+                <div>   
+  <h4>⚡️Cross-disciplinary slide 02: how do we learn?</h4>       
+<p > Questions (like Tasks <b>T</b> that ML model learns towards) </p>
+                  
+<p > I want you to be aware of the learning context during each lecture: what models we are talking about in each lecture and what we can use those for. </p> 
+<p > Whatever questions you have in mind — interrupt me anytime ! </p> 
+<p > <a href="https://www.sciencedirect.com/science/article/abs/pii/S0022537179902007"> Having a question means you have already known enough to know what is not known. </a>  </p>
+<p > I’m also learning from your questions 🤑 </p> 
+</div>
+
+                      <div>   
+<h4>⚡️Cross-disciplinary slide 03: how do we learn?</h4>       
+<p > Intuitions </p>
+                  
+<p > Some important AI developments are inspired by how we think our brain works, e.g. the attention mechanism that enables ChatGPT. (more on this in week 8) 🧠 </p> 
+<p > Some intuitions on ML can be gained just by introspection. I'll help by sharing mine.  </p> 
+<p > Though intuitions are not formal knowledge, they connect you from academic jargons to daily real life!👽 </p>
+<p > which makes knowledge internalisation efficient, and FUN 🤑 </p> 
+</div>
+
+  <!-- Introduction to ML: a recap  --> 
+
+            <div>
+  <h4>Back to learning machine learning: </h4>       
+    <p>A computer program is said to learn from experience <b>E</b> with respect to some class of tasks <b>T</b> and performance measure <b>P</b>, 
+      <br> 
+      if its performance at tasks in <b>T</b>, as measured by <b>P</b>, improves with experience <b>E</b>.</p>
+</div>
+
+      
+            <div>
+  <h4> Now that we have some general ideas on the theoretical side of ML: </h4> 
+  <p > - Machine learning is a subfield of artificial intelligence that gives computers the ability to learn without explicitly being programmed. It learns from data. 🙇</p>
+  <p > - Its product is ML models that take input, process and output. 🤖</p>
+  <p > - ML has a wide range of applications in pattern recognition and pattern generation. 🤯</p>
+    <p > - Details for specific ML models and ML tasks will be covered throughout this unit. 🤗</p>
+
+    </div>
+
+  <!-- Introduction to ML: the pipeline  --> 
+
+    <div>
+    <h4>Next, we are going to have a quick look at the big picture on the practical side of ML  </h4>            
+    </div>
+
+
+
+      <div>
+
+<h4> The pipeline for developing an ML solution from A to Z </h4>  
+    <p> (we will refer back to this multiple times throughout this unit)</p>
+    <ol>
+      <li>Problem Definition 🕵️</li>
+      <li>Data Ingestion 🧺</li>
+      <li>Data Preparation 🔨</li>
+      <li>Data Segregation 🖖</li>
+      <li>Model Selection 🧐</li>
+      <li>Model Training 🏋️</li>
+      <li>Candidate Model Evaluation 🧪</li>
+      <li>Model Deployment 🎉</li>
+      <li>Performance Monitoring 📈</li>
+    </ol>
+</div>
+
+          <div>
+  <h4>Before explaining each part in details, here are three emoji indicators I defined (these are very subjective of course) </h4>  
+    <p>🧠: how conceptual this part is, which is better learnt with intuitions, questions and repeated exposure. </p>
+    <p>👐: how practical this part is, which is better learnt through hands-on practice and repeated exposure. </p>
+</div>
+  
+  <div>
+  <h2>Problem Definition 🕵️</h2>  
+    <p>Define the problem you are interested in.</p>
+    <p>It can be about caring some other people, or just having fun, or finding answers to questions you are curious about, etc. </p>
+    <p>When defining the problem, have a big picture on how ML could help with the problem. </p>
+      <p > 🧠:⭐️⭐️⭐️⭐️⭐️</p> 
+      <p > 👐:⭐️⭐️⭐️</p> 
+    
+  </div>
+  
+          <div>
+  <h2>Data Ingestion 🧺</h2>  
+    <p>Depends on the defined problem, identify and gather the data you want to work with. </p>
+    <p>There are existing public dataset() or you can curate your own dataset(e.g. scraping)</p>
+    <p > 👐:⭐️⭐️⭐️⭐️⭐️ (this step is very practical)</p> 
+  </div>
+                  <div>
+  <h2>Data Preparation 🔨</h2>  
+    <p>It often include data cleaning and feature engineering.</p>
+    <p>Since the collected data from previous step is often raw and unstructured, it is rarely in the correct form to be processed. </p>
+    <p>Data cleaning usually involves filling missing values, removing duplicate records and normalising etc.. </p>
+    <p>Feature engineering involves extracting, constructing and selecting effective features. </p>
+                    
+    <p > 👐:⭐️⭐️⭐️⭐️⭐️(this step is very practical)</p>
+    <p > 🧠:⭐️⭐️⭐️⭐️⭐️ (a good understanding of the problem and the dataset would help a lot)</p>
+  </div>
+                          <div>
+  <h2>Data Segregation 🖖</h2>  
+    <p>Split the processsed data into:</p>
+    <ol>
+      <li>A training set (to train the model)</li>
+      <li>A validation set (to monitor the model training and select best ones)</li>
+      <li>A test set (to evaluate how the final model performs)</li>
+    </ol>                   
+    <p > 👐:⭐️⭐️⭐️⭐️⭐️(this step is very practical, usually done with one line of code)</p> 
+    <p > 🧠:⭐️⭐️⭐️ (but we need to know why we are splitting the dataset)</p> 
+    
+</div>
+  
+                  <div>
+  <h2>Model Selection 🧐</h2>  
+    <p>Depends on the defined problem, select what models you want to train and test. </p>
+      <p > 🧠:⭐️⭐️⭐️⭐️⭐️ (knowing your options aka models and their characteristics is essential)</p> 
+      <p > 👐:⭐️⭐️⭐️⭐️⭐️ (knowing how to train and use models in practice is also essential)</p> 
+</div>
+                  <div>
+  <h2>Model Training 🏋️</h2>  
+    <p>Use the training dataset to train the ML model.</p>
+      <p > 👐:⭐️⭐️⭐️⭐️⭐️(this step is quintessential, though usually done with several lines of codes)</p> 
+    <p > 🧠:⭐️⭐️⭐️⭐️⭐️ (knowing how the training process works is also quintessential)</p> 
+    
+</div>
+                  <div>
+  <h2>Candidate Model Evaluation 🧪</h2>  
+    <p>Assess the performance of the candidate models using validation dataset to see how well these models perform. </p> 
+      <p > 👐:⭐️⭐️⭐️⭐️⭐️ (this step is very practical and automated, by looking at some numbers)</p> 
+  </div>
+                  <div>
+  <h2>Model Deployment 🎉</h2>  
+    <p>Once the best model is chose, it is typically deployed via some API and embedded in some frameworks to put into real world.</p>
+
+      <p > 👐:⭐️⭐️⭐️⭐️⭐️ (this step is very practical)</p> 
+      <p > 🧠:⭐️⭐️⭐️⭐️⭐️ (nice user interface design would be fabulous, etc.)</p> 
+  </div>
+  
+                  <div>
+  <h2>Performance Monitoring 📈</h2>  
+    <p> The model is continuously monitored to observe how it behaved in the real world and calibrated accordingly.</p>
+    <p> New data is collected to incrementally improve it.</p>
+      <p > 👐:⭐️⭐️⭐️⭐️⭐️ (this step is very practical)</p> 
+  </div>
+  
+
+  <!-- Introduction to ML: pipeline tools  --> 
+      <div>
+  <h2>A (non-exhaustive) list of tools we will use for this unit: </h2>  
+        
+    <p>Language and libraries: Python, NumPy, <a href="https://scikit-learn.org/stable/">scikit-learn</a>, <a href="https://pytorch.org/">PyTorch</a>, <a href="https://www.tensorflow.org/">TensorFlow(optional)</a>, etc. </p>
+    <p>Interactive computing interface (for creating and sharing computational documents): <a href="https://jupyter.org/">Jupyter notebook </a> </p>
+    <p>(Here is a <a href="https://cs231n.github.io/python-numpy-tutorial/"> great tutorial</a> on Jupyter notebook, python and numpy)</p>
+    <p>You can also use IDE like <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>(great debugging functionality and free for education), <a href="https://code.visualstudio.com/">VS code</a>(free, great UI, various plugins) </p>
+</div>
+
+  <!-- Maths warm up --> 
+<div>
+  <h4>Before diving into our first ML model, here are notebooks for python and maths warmup</h4>    
+<p>referenced from <a href="https://github.com/jonkrohn/ML-foundations">Jon Krohn's Machine Learning Foundations</a>: </p>
+
+<p><a href="https://colab.research.google.com/github/jonkrohn/ML-foundations/blob/master/notebooks/1-intro-to-linear-algebra.ipynb">Linear algebra warm up 1 with Python, NumPy, PyTorch and TensorFlow</a> </p>
+<p><a href="https://colab.research.google.com/github/jonkrohn/ML-foundations/blob/master/notebooks/2-linear-algebra-ii.ipynb">Linear algebra warm up 2 with Python, NumPy, TensorFlow and PyTorch</a> </p>
+<p><a href="https://colab.research.google.com/github/jonkrohn/ML-foundations/blob/master/notebooks/5-probability.ipynb">Probability and information theory warm up with Python, NumPy </a> </p>
+  <p><a href="https://colab.research.google.com/github/jonkrohn/ML-foundations/blob/master/notebooks/3-calculus-i.ipynb">Derivative and autodiff warm up with Python, NumPy, Pytorch and TensorFlow </a> </p>
+</div>
+
+      <div>
+  <h4>Some resources on linear algebra: </h4>       
+    <p><a href="https://www.3blue1brown.com/topics/linear-algebra">a classic 3B1B series, my fav</a> </p>
+</div>
+
+
+ <div>
+  <h4>Some resources on derivatives and autodiff: </h4>       
+<p><a href="https://youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr&si=6uqer_kI7kXerOzL">3B1B smashes it again</a> </p>
+  <p><a href="https://youtu.be/VMj-3S1tku0?si=d97mCZt0nX5Z7iII">this one from Karpathy</a> </p>
+</div>
+
+
+<!-- Summary of this lecture -->
+  <div>
+      <h2>Today we have learnt about: </h2>
+      <p >- What this unit is about: a combination of theory and practice on AI/ML</p>
+      <p >- Intelligence -> AI -> ML </p>
+      <p >- A wide range of ML applications in pattern recognition and pattern generation (and some fun demo apps to play with!)</p>
+      <p >- Full ML project development pipeline (big picture only)</p>
+      <p >- Python and maths warmup</p>
+    </div>
+
+
+
+  <div>
+  
+    <p>
+    We'll see you next week same time same place! 🫡
+    </p>
+
+    <p>
+    Homework for this week: 
+      <br>
+      Finish all notebooks including reading and running all the cells! 😈
+    </p>
+  </div>
+  
+</body>
+</html>
