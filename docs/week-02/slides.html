@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <title>AIML</title>
+  <!-- This whole presentation was made with Big: https://github.com/tmcw/big -->
+  
+  <link href="../big/big.css" rel="stylesheet" type="text/css" />
+  <script src="../big/big.js"></script>
+  <link href="../big/themes/lightWhite.css" rel="stylesheet" type="text/css" />
+
+  <!-- Favicon link below, via https://emojitofavicon.com -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🍴</text></svg>"></link>
+  
+  <style>
+    body {
+      background-color: #EDDD6E;
+      font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+      /* font-weight: 700;*/
+      margin: 0;
+      padding: 0;
+      font-style: normal;
+      font-size: 21px;
+    }
+
+
+      .bg-star {
+          background-image: url('stars.png');
+          background-size: cover;
+          background-repeat: no-repeat;
+
+      }
+</style>
+
+  </style>
+  
+</head>
+<body>
+  <div>
+    AIML
+    <br />
+    Lecture 02
+    <br />
+    Supervised Learning Part 1 <br>Regression📈
+  </div>
+  <div>
+           <h4> Lecture prep 😎 </h4>    
+					<p> Please have  <a href="https://moodle.arts.ac.uk/mod/resource/view.php?id=1287687">this directory</a> of jupyter notebooks ready for running on your machine 🤗 </p>
+          
+          <p> - Workflow is important: which IDE are you using? </p>
+          
+           <p> As this is our first time in the lecture working with Jupyter notebook, let's get everyone ready! </p>
+          
+           <p> - For a new project, the steps are usually: 1) create a new virtual environment and activate 2) open a jupyter noteboook file (xxx.ipynb)</p>
+          
+           <p> <a href="https://www.jetbrains.com/help/pycharm/jupyter-notebook-support.html#ui">Here</a> is how to set up PyCharm for Jupyter Notebooks </p>
+          
+          <p> <a href="https://code.visualstudio.com/docs/datascience/jupyter-notebooks">Here</a> is how to set up VSCode for Jupyter Notebooks </p>
+
+				</div>
+
+                                <div>
+				 <h4> a cool AI <a href="https://www.youtube.com/watch?v=kPAEMUzDxuo">MV</a> to wake us up </h4>    
+        <h4> and introducing this artist <a href="https://www.youtube.com/watch?v=5cbCYwgQkTE">Holly Herndon</a> </h4>    
+
+				</div>
+        
+        
+        <!-- Goal of this lecture -->
+        <div>
+						<h2>In the next four hours, we'll have learnt about: </h2>
+						<p >1. what supervised learning is?</p>
+						<p >2. what classification and regression tasks are?</p>
+						<p >3.0. A simple regression model: linear regression</p>
+						<p >3.1. Cost function</p>
+            <p >3.2. Least square regression solution </p>
+          <p >3.3. Gradient descent solution </p>
+           <p >4. Model evaluation </p>
+           <p >The practical: linear regression, GD in python </p>
+						
+					</div>
+
+      
+      <!-- Types of machine learning-->
+            	<div>
+					<h2>Different paradigms of machine learning ⚡️</h2>
+          <p > Supervised learning: learning with labeled examples of the correct behavior (demo "regression" on the whiteboard)</p>
+          <p > Unsupervised/self-supervised learning : learning without labeled examples – instead, looking
+for “interesting” patterns in the data (demo "clustering" on the whiteboard)</p>
+          <p > Reinforcement learning: learning system (agent) interacts with
+an environment and learns to maximize a scalar reward signal. Check chapter 1.1 from <a href="https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf">Sutton and Barto's textbook</a> for more details.
+                </p>
+
+          
+				</div>
+      
+      <!-- what supervised learning is-->
+                  	<div>
+					<h4>Today (and for much of this course) we focus on supervised learning. 🏎️</h4>
+          <p> This means we are given a training set consisting of <b>inputs</b> and
+<b>corresponding labels</b>, e.g</p>				
+					<table>
+						<thead>
+							<tr>
+								<th>Task</th>
+								<th>Inputs</th>
+								<th>Labels</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><a href="https://github.com/WongKinYiu/yolov7">object detection</a></td>
+								<td>image</td>
+								<td>categories/locations</td>
+							</tr>
+							<tr>
+								<td><a href="https://github.com/rmokady/CLIP_prefix_caption">image captioning</a></td>
+								<td>image</td>
+								<td>caption(text)</td>
+							</tr>
+							<tr>
+                <td><a href="https://openai.com/research/whisper">speech recognition</a></td>
+								<td>audio</td>
+								<td>text</td>
+
+							</tr>
+              	<tr>
+                <td>online advertising</td>
+								<td>ad, user info</td>
+								<td>click or not</td>	
+							</tr>
+              <tr>
+								<td>Spam filtering</td>
+								<td>email</td>
+								<td>spam or not</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+      
+      <!-- toy example to start with-->
+        
+           <div>
+     <h4>Two task types from supervised learning</h4>
+
+     <p > ☝️Regression</p>
+     <p > ✌️Classification</p>
+      </div>
+        
+   <div>
+     <h4>Toy example: house price prediction</h4>
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/house-price-prob.png?v=1700814426394" alt="Down arrow">
+				</a>
+     <p > Question🤑: what's the price for a 750 sq feet house?</p>
+      </div>
+        
+       <div>
+     <h4>Toy example: house price prediction</h4>
+      <p> Maybe we can fit a straight line to the data📏</p>
+      <p> And look up the price on the straight line🧐</p>
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/prediction.png?v=1700814431560" alt="Down arrow">
+				</a>
+      </div>
+        
+           <div>
+     <h4>Toy example: house price prediction</h4>
+     <p> Or instead of fitting a straight line, </p>
+      <p> this curve looks like a better fit to the data?📈 </p>
+             
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/fit-another-line.png?v=1700814436696" alt="Down arrow">
+				</a>
+      </div>
+      
+         <!-- what classification and regression tasks are-->
+                 <div>
+     <h4>Toy example: house price prediction</h4>
+     <p> This house price prediction problem is a regression task. </p>
+      <p> ☝️Regression: </p>
+         <p> - A supervised learning task that predicts a <b>numeric</b> value (out of infinitely many possible outputs) </p>     
+     <p> ✌️Classification: </p>
+        <p> - A supervised learning task that predicts a <b>categorical</b> value (out of a small number of possible outputs) </p>    
+      </div>
+        
+                  <div>
+     <h4>An example of classification: breast cancer detection</h4>             
+      <a href="#" class="navigate-down">
+							<img width="1200" height="300" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/breast-cancer-prediction.png?v=1700815477556" alt="Down arrow">
+				</a>
+       <p> The output is either 1(malignant) or 0(benign) </p>
+      </div>
+      
+       <div>
+         <p> You might have seen ChatGPT as a game changer, here is a nice talk on how something as small as a 
+           pizza sales regression model can also bring positive change to the world: </p>   
+        <p> <a href="https://www.youtube.com/watch?v=reUZRyXxUs4"> How AI Could Empower Any Business by Andrew Ng </a> </p>     
+				</div>
+      
+      <!-- A simple regression model: linear regression-->
+
+                          <div>
+     <h4>Next up: A simple regression model - linear regression</h4>             
+
+      </div>
+        
+        
+      <div >				
+					 <h4>⚡️Big takeaway message for next few hours:</h4>             
+          <p >- The function approximation view of machine learning: </p>
+          <p >-- We select a model family parameterised by some parameters🩻💪</p>
+          <p >-- We select some loss function to construct cost function</p>
+          <p >-- We optimize the cost function w.r.t. model parameters</p>
+				</div>
+        
+        
+                          <div>
+     <h4>A linear regression model with one variable </h4>    
+      <p> Let's have a look at the dataset, visualized as a plot </p>
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/house-price-prob.png?v=1700814426394" alt="Down arrow">
+				</a>
+      </div>
+      
+                                  <div>
+     <h4>A linear regression model with one variable </h4>    
+      <p> Let's have a look at the dataset, visualized as a data table </p>
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/data-table.png?v=1700816173063" alt="Down arrow">
+				</a>
+      <p> where one row corresponds to one data point on the plot from the last slides</p>                    
+      </div>
+        
+          
+      <div>
+     <h4>Terminology🤗</h4>    
+      <p> Training set: data used to train the model</p>
+     <p> $x$: Input variable or feature(e.g. house size in the example) </p>
+    <p> $y$: Output variable, target variable(e.g. house price in the example) </p>
+    <p> $(x, y)$: One training example </p>
+     <p> $N$: Total number of training examples </p>
+     <p> $(x^{i}, y^{i})$: The i-th training example </p> 
+      <p> $\widehat{y}$: the predicted output (note the difference between this and $y$ which is the target "correct answer") </p> 
+      </div>
+        
+       <div>
+             <h4>Terminology🤗</h4>    
+      <p> Quiz time!</p>
+     <p> What's the 4th training example from this training set? </p>
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/data-table.png?v=1700816173063" alt="Down arrow">
+				</a>
+      </div>
+    
+         <div>
+      <h4>Terminology🤗</h4>    
+      <p> Quiz time!</p>
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/data-table.png?v=1700816173063" alt="Down arrow">
+				</a>
+      <p> The 4th training example from this training set:  $(852, 178)$ </p>
+      </div>
+        
+      
+             <div>
+      <h4>Linear regression📈📉</h4>    
+      <p> Model: In linear regression with one input variable $x$, we use a linear function of the feature to make prediction $\widehat{y}$ of the target $y$                       
+      </p>
+      
+  \[\begin{aligned}
+  \widehat{y} = f_{w,b}(x)=wx+b \\
+
+
+  \end{aligned} \]
+
+  <p> or simplified as: </p>
+    
+    \[\begin{aligned}
+
+  \widehat{y} = f(x)=wx+b \\
+
+  \end{aligned} \]
+               
+  <p> - $w$ is the weight</p>
+ <p> - $b$ is the bias</p>
+      </div>
+        
+               <div>
+      <h4>Linear regression📈📉</h4>    
+      <p> The Model:   </p>
+      
+  \[\begin{aligned}
+  \widehat{y} = f(x)=wx+b \\
+
+  \end{aligned} \]
+  <p> - $\widehat{y}$ is the prediction and we hope that our prediction is close to the target: $\widehat{y}$ ≈ $y$ <p>
+  <p> - $w$ is the weight</p>
+ <p> - $b$ is the bias</p>
+<p> $w$ and $b$ together are the <i>parameters</i>🎚️🎛️</p>
+
+      </div>
+        
+       <!--Parameters explained -->
+     <div>
+     <h4> The influence of <i>parameters</i> ($w$ and $b$🎚️🎛️) on the linear function:  </h4>    
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/w-n-b.png?v=1700819362602" alt="Down arrow">
+				</a>
+      <p> They are knobs that tune the slope and intercept of the straight line!</p>                    
+      </div>
+        
+        <div>
+           <h4> Practice time!!!🫸🫷</h4>    
+					<h4>Let's go to the this week's notebooks 01(Python and Jupyter) and 02(model representation) in folder "Notebooks-P1-SimpleLR"</h4>
+          
+          <p> There might be some "ModuleNotFoundError", to fix these just install the missing packages to your environment (let me know if you have problems!)</p>           
+
+				</div>
+        
+      <!-- Cost function-->
+               <div>
+       <p> But how to learn the linear function from the training set (i.e. to find what are the suitable values for $w$ and $b$)? </p>
+      </div>
+        
+               <div>
+       <p> We'll construct the cost function first! This will be the target🎯 for guiding the learning process.</p>
+      </div>
+        
+                     <div>
+       <p> Quiz time! 😜 </p>
+      <p> How would you measure the distance between a prediction$\widehat{y}$ and the target $y$?  </p>
+      </div>
+        
+                         <div>
+       <p> Quiz time! 😜 </p>
+      <p> How would you measure the distance between a prediction$\widehat{y}$ and the target $y$?  </p>
+       <p> 😎There are more than one ways... we will start with something simple and conventional called squared error loss function. </p>
+      </div>
+        
+               <div>
+      <h4>Loss function and Cost function </h4>    
+      <p> A loss function $L(\widehat{y}, y)$ defines how bad it is if, for some input $x$ the model predicts $\widehat{y}$, but the target is actually $y$</p>
+      <p> Squared error loss function:</p>
+     \[\begin{aligned}
+  L(\widehat{y}, y) = \frac{1}{2}(\widehat{y} - y)^{2} \\
+
+  \end{aligned} \]     
+      </div>
+        
+                     <div>
+      <h4>Loss function and Cost function </h4>    
+      <p> A loss function $L(\widehat{y}, y)$ defines how bad it is if, for some input $x$ the model predicts $\widehat{y}$, but the target is actually $y$</p>
+      <p> Squared error loss function:</p>
+     \[\begin{aligned}
+  L(\widehat{y}, y) = \frac{1}{2}(\widehat{y} - y)^{2} \\
+
+  \end{aligned} \]   
+       <p> $\widehat{y} - y$ is the residual, and we want to make this small in magnitude</p>
+       <p>The $\frac{1}{2}$ factor is just to make the calculations convenient </p>
+      </div>
+      
+      <div>
+      <h4>Loss function and Cost function </h4>    
+     <p> Squared error loss function:</p>
+     \[\begin{aligned}
+  L(\widehat{y}, y) = \frac{1}{2}(\widehat{y} - y)^{2} \\
+
+  \end{aligned} \]   
+       <p> Cost function: loss function averaged over all training examples </p>
+      </div>
+        
+     <div>
+      <h4>Loss function and Cost function </h4>    
+     <p> Squared error loss function for one training example:</p>
+     \[\begin{aligned}
+  L(\widehat{y}, y) = \frac{1}{2}(\widehat{y} - y)^{2} \\
+
+  \end{aligned} \]   
+       <p> Cost function: loss function averaged over all training examples </p>
+           \[\begin{aligned}
+   J(w,b)  = \frac{1}{2N}\sum_{i=1}^{N}(\widehat{y}^{i} - y^{i})^{2} \\
+                                  
+   = \frac{1}{2N}\sum_{i=1}^{N}(wx^{i} + b - y^{i})^{2} \\
+
+  \end{aligned} \] 
+      </div>
+        
+        <div>
+      <h4>Loss function and Cost function </h4>    
+     <p> Squared error loss function for one training example:</p>
+     \[\begin{aligned}
+  L(\widehat{y}, y) = \frac{1}{2}(\widehat{y} - y)^{2} \\
+
+  \end{aligned} \]   
+       <p> Cost function: loss function averaged over all training examples </p>
+           \[\begin{aligned}
+   J(w,b) = \frac{1}{2N}\sum_{i=1}^{N}(wx^{i} + b - y^{i})^{2} \\
+
+  \end{aligned} \] 
+      <p> Note that cost function is expanded from a function of $\widehat{y}$ to a function of $w, b$ </p>
+      </div>
+        
+                                    <div>
+      <h4>Loss function and Cost function </h4>      
+       <p> Cost function: loss function averaged over all training examples </p>
+           \[\begin{aligned}
+  J(w,b) = \frac{1}{2N}\sum_{i=1}^{N}(\widehat{y}^{i} - y^{i})^{2} \\
+                                  
+        = \frac{1}{2N}\sum_{i=1}^{N}(wx^{i} + b - y^{i})^{2} \\
+
+  \end{aligned} \]  
+       <p> <FONT Color=green>Terminology varies: Some call “cost” empirical or average loss. </FONT></p>                               
+      </div>
+              
+                    	<div>
+          <p >Now that we have cost function constructed🤗 </p>
+           <p >But what to do with that?🧐</p>
+           <p >We want to minimize the cost w.r.t $w$ and $b$ !😎</p>
+			</div>
+        
+        <div>
+           <h4> Practice time!!!🫸🫷</h4>    
+					<h4>Let's go to the this week's notebook 03(Cost function)! </h4>
+
+          <p >Take a look at the key function: <i>compute_cost()</i></p>
+				</div>
+        
+        
+              	<div>
+          <p >Now that we have cost function constructed🤗 </p>
+           <p >But what to do with that?🧐</p>
+           <p >We want to minimize the cost w.r.t $w$ and $b$ !😎</p>
+			</div>
+        
+      <div>
+      <h4>A summary of what we have talked so far😎</h4>    
+      <a href="#" class="navigate-down">
+							<img width="700" height="600" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/summary.png?v=1700820690846" alt="Down arrow">
+				</a>
+
+      </div>
+        
+        
+     <!-- Vectorization -->
+     <div>
+         <p>Before we dive into how to minimize the cost function... </p>
+      <h4> Here is a technical premise called Vectorization to mention😎</h4>      
+                  
+      </div>
+        
+           <div>
+       <p>🤗Vectorization is not a new theory, it is about using notations (how to write stuff down) and implementation (how to write code) in a better way!</p>
+       
+       <p>Let's start with an example of vectorization! </p>     
+                  
+      </div>
+     
+         <div>
+      <p>We talked about single variable linear regression previously: </p>
+       <p>Use one feature (house size) to predict the house prize</p>
+      <a href="#" class="navigate-down">
+							<img width="800" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/data-table.png?v=1700816173063" alt="Down arrow">
+				</a>
+      <h4>let's temporarily turn our head to a slightly more realistic case ➡️ </h4>      
+                  
+      </div>
+        
+             <div>
+      <p>What if we chip in more features for prediction? </p>
+       <p> <FONT Color=blue>Use multiple features to predict house prize</FONT></p>
+      <a href="#" class="navigate-down">
+							<img width="1000" height="330" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/multi-feat.png?v=1701780691848" alt="Down arrow">
+				</a>            
+      </div>
+    
+                   <div>
+     <p> <FONT Color=blue>Use multiple features to predict house prize</FONT></p>
+       <p>Notation time! Let's summon subscripts to denote different features: </p>
+       <p>$x_k$: the k-th feature </p>
+       <p>$x_1$ for house size</p>
+       <p>$x_2$ for number of rooms</p>
+       <p>$x_3$ for number of floors</p>
+       <p>$x_4$ for age of home</p>
+      </div>
+        
+                       <div>
+     <p> <FONT Color=blue>Use multiple features to predict house prize</FONT></p>
+       <p>Notation time! Recall we use superscript to denote the index of training example: </p>
+       <p> $x^{i}$: The i-th training example </p>
+       <p> Combine the subscipt and the superscript, we have... 🫨</p>
+       <p> $x_k^{i}$: The k-th feature for i-th training example </p>
+       <p>for instance, $x_2^{i}$: the number of rooms in i-th training example </p>
+      </div>
+        
+                               <div>
+     <p> Wrap training examples into vectors 🫨 </p>
+       <p> let's use vector to express $x^{i}$: $\vec{x}^{i} = [x_1^{i},x_2^{i},x_3^{i},x_4^{i} ]$ </p>
+       <p>for instance: </p>
+              <a href="#" class="navigate-down">
+							<img width="600" height="200" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/multi-feat.png?v=1701780691848" alt="Down arrow">
+				</a> 
+       <p>$\vec{x}^{2}$: [1416, 3, 2, 40] </p>
+      </div>
+        
+        
+        
+                        <div>
+     <p> <FONT Color=blue>Use multiple features to predict house prize</FONT></p>
+       <p>How to modify our simple linear regression model to the multiple features setting? </p>
+       <p> For simple linear regression with one feature we have: $\widehat{y} = wx+b$ </p>
+              
+        <p> For simple linear regression with four features we can have: </p>
+      \[\begin{aligned}
+  \widehat{y} = w_1x_1+w_2x_2+w_3x_3+w_4x_4+b \\
+
+  \end{aligned} \]
+
+      </div>
+        
+                 <div>
+       <p> <FONT Color=blue>Use multiple features to predict house prize</FONT></p>
+      <a href="#" class="navigate-down">
+							<img width="600" height="200" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/multi-feat.png?v=1701780691848" alt="Down arrow">
+				</a> 
+              \[\begin{aligned}
+  \widehat{y} = w_1x_1+w_2x_2+w_3x_3+w_4x_4+b \\
+
+  \end{aligned} \]
+       <p> For example, if we have $w_1=0.1$, $w_2=4$, $w_3=10$, $w_4=-2$</p>
+       <p> To compute $w_1x^2_1+w_2x^2_2+w_3x^2_3+w_4x^2_4$ we take dot product between $\vec{x}^{2}$ = [1416, 3, 2, 40] and $\vec{w}$ = [0.1, 4, 10, -2]</p>
+      </div>
+
+     <div>
+      <h4>🤪 Quiz time: Which code runs faster for taking dot product between two lists w and x ? </h4>      
+      <pre> <code data-noescape>
+         f = 0
+         for i in range(len(w)):
+           f += w[i] * x[i]  
+         </code></pre>
+                        
+            <pre> <code data-noescape>
+         import numpy as np
+         f = np.dot(w,x) 
+         </code></pre>
+          
+      <p> 🤪 autodidact: google "how to measure elapsed time in python"</p>
+      </div>
+        
+                            <div>
+      <h4>🤪 Quiz time: Which code runs faster for taking dot product between two lists w and x ? </h4>      
+
+            <pre>🥳<code data-noescape>
+         import numpy as np
+         result = np.dot(w,x) 
+         </code></pre>
+      <p>Here we are using a technique called Vectorisation</p>                 
+      </div>
+        
+                                <div>
+      <h4>🥳 Vectorisation: why it is faster? </h4>      
+      <p>It utilizes parallel computation supported by optimized software(e.g. numpy) and hardware (e.g. GPU): </p> 
+      <a href="#" class="navigate-down">
+							<img width="1000" height="400" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/vectorisation.png?v=1701783243903" alt="Down arrow">
+				</a>                
+      </div>
+
+              <div>
+ 
+<p>COol that's just an example of vectorization in computing dot product. 🔎 </p>
+<p>Vectorization is actually happening in a lot of places (computing cost function, calculating gradients, etc. ). We'll have some notebooks to look at later. 🥽</p>
+ </div>
+        
+      <div>
+      <h4>Vectorisation - summary</h4>  
+<p>How to vectorise?</p>
+<p> It means that we are going to use linear algebra notations (vector, matrixe, invert,etc.) to re-phrase our data (which we just did, but only for one training example), parameter (which we just did too) and cost function! 
+</p>
+<p>🤪In programming it is just about calling the right function from packages that have done optimization for us (e.g. np.dot() from NumPy)</p>
+ </div>
+        
+    <div>
+      <h4>Vectorisation - summary</h4>  
+<p>How to vectorise?</p>
+<p>1. We can organize all the training examples into a matrix $\matrix{X}$ with one row per training example,
+ <br> 
+  and all the targets into the target vector $\matrix{y}$</p>
+<img width="1000" height="280" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/vec_x.png?v=1701715999944" alt="Down arrow">
+ </div>
+  
+      <div>
+      <h4>Vectorisation - summary</h4>  
+<p>How to vectorise?</p>
+<p>2. The linear regression model is vectorised as: </p>
+\[\begin{aligned}
+  \matrix{\widehat{y}} = \matrix{W}^{T}\matrix{X} + \matrix{b}\\
+  \end{aligned} \]  
+ <p>Compared with this where $x$ is just for one data example and $w$ is just for one feature:</p>   
+\[\begin{aligned}
+  \widehat{y} = wx+b \\
+
+  \end{aligned} \]
+</div>
+        
+      <div>
+      <h4>Vectorisation - summary</h4>   
+<p>How to vectorise?</p>
+<p>3. We can re-write our cost function into:</p>
+\[\begin{aligned}
+  J = \frac{1}{2N}||\matrix{W}^{T}\matrix{X} + \matrix{b} - \matrix{y}||^{2}\\
+  \end{aligned} \]  
+<p>Note that in this form, we are free from using super/sub scripts and summation shown like shown in this form previously: </p>
+\[\begin{aligned}
+   J(w,b) = \frac{1}{2N}\sum_{i=1}^{N}(wx^{i} + b - y^{i})^{2} \\
+
+  \end{aligned} \] 
+</div>
+        
+      <div>
+      <h4>Vectorisation - summary</h4>  
+<p>Okay but why vectorise? 🤠 </p>
+<p>
+1. Excessive super/sub scripts are hard to work with. The equation will be much simpler!
+</p>
+<p> 2. The code will be simpler and more readable. </p>
+<p> 3. The code will be faster thanks to highly optimized linear algebra libraries (with hardware support). </p>
+<p> 4. Matrix multiplication very fast on GPU (Graphics Processing Unit). </p>
+
+ </div>
+        
+        <div>
+      <h4>Vectorisation - summary</h4>  
+<p> Switching in and out of vectorized form is a skill you gain with practice 🤠 </p>
+<p>Some derivations are easier to do element-wise. </p>
+<p> Some algorithms are easier to write/understand using for-loops and vectorize later for performance</p>
+
+ </div>
+        
+ 
+
+        
+      <!-- Least square regression solution-->
+        
+<div>
+<h4>That's the end of vectorisation for now. </h4>  
+  <p>Let's go back to the good old <span class="fragment highlight-blue">one feature</span> linear regression 🤠 </p>
+<p> But with vectorisation notations equiped 🔫! </p>
+<p> (also forget about python coding stuff for now...) </p>
+ </div>
+        
+<div>
+<p>Back to this question: 🤠 </p>
+<p>How to minimize the cost function $J$ w.r.t. $\matrix{W}$ and $\matrix{b}$ ?</p>
+ </div>
+        
+       <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Recall from calculus: the minimum of a smooth function (if it exists)
+occurs at a critical point, i.e. point where the derivative is zero </p>
+           \[\begin{aligned}
+   \frac{\partial J}{\partial w} = 0 \\
+                                  
+   \frac{\partial J}{\partial b} = 0 \\
+
+  \end{aligned} \]                             
+      </div>
+        
+           <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Solutions maybe direct or iterative </p>
+ <p> - Sometimes we can directly find provably optimal parameters (e.g. set the
+gradient to zero and solve in closed form). We call this a direct solution.</p>
+<p> - Iterative solution methods repeatedly apply an update rule that
+gradually takes us closer to the solution.</p>
+
+      </div>
+
+   <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> 🤓 Direct solution for linear regression with sq error cost:(with vectorised notation) </p>
+     \[\begin{aligned}
+ J = \frac{1}{2N}||\matrix{W}^{T}\matrix{X} + \matrix{b} - \matrix{y}||^{2}\\
+  \end{aligned} \]   
+ <p> Taking the gradient with respect to $\matrix{W}$ and setting it to 0, we get: </p>
+    \[\begin{aligned}
+
+  \nabla_{\matrix{W}}J = \matrix{X}^{T}\matrix{X}\matrix{W} - \matrix{X}^{T}\matrix{y} = 0 \\
+                                  
+  \matrix{W}^{*} = (\matrix{X}^{T}\matrix{X})^{-1}\matrix{X}^{T}\matrix{y}\\
+
+  \end{aligned} \]   
+<p> Linear regression is one of only a handful of models in this unit
+that permit direct solution. </p>
+
+      </div>
+       <!-- Gradient descent solution-->
+      
+     <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Iterative solution </p>
+ <p> Most optimization problems we cover in this course don’t have a direct solution. 🥹 </p> 
+<p> Now let’s see a second way to minimize the cost function which is more broadly applicable: gradient descent. 😈 </p>
+     </div>      
+        
+      <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Iterative solution: gradient descent  </p>
+<p> It is used for optimizing a wide range of models (including neural networks covered later!) 🤘 </p>
+<p>Gradient descent is an iterative algorithm, which means we apply an update repeatedly until some criterion is met. 🔁 </p>
+<p> We initialize the weights to something reasonable (e.g. all zeros) and repeatedly adjust them in the direction of steepest descent. 🌪️ </p>
+      </div>  
+     
+       <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Iterative solution: gradient descent </p>
+ <p> Let's play a <a href="https://experienced-cute-freighter.glitch.me/#74">game</a> for intuitions on gradient descent! </p> 
+<p> Or check <a href="https://www.youtube.com/watch?v=IHZwWFHWa-w">this tutorial</a> out </p> 
+<p> and <a href="https://www.youtube.com/watch?v=sDv4f4s2SB8&t=1s&pp=ygUQZ3JhZGllbnQgZGVzY2VudA%3D%3D">another</a> </p> 
+     </div>  
+        
+         <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Iterative solution: gradient descent </p>
+ <p> Here is the formula for updating $\matrix{W}$ and $\matrix{b}$ to minimize the cost $J$: </p> 
+           <p> <FONT COLOR=green>Repeat until convergence </FONT></p>      
+\[\begin{aligned}
+
+           \matrix{W} = \matrix{W} - \alpha \nabla_{\matrix{W}}J \\
+           \matrix{b} = \matrix{b} - \alpha \nabla_{\matrix{b}}J 
+
+  \end{aligned} \] 
+   <p> - the sign $=$ here is used in programmatic sense which means assignment not truth assertion </p>      
+   <p> - $\alpha$ is the learning rate </p>      
+     </div>  
+        
+               <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Iterative solution: gradient descent </p>
+
+\[\begin{aligned}
+
+           \matrix{W} = \matrix{W} - \alpha \nabla_{\matrix{W}}J \\
+           \matrix{b} = \matrix{b} - \alpha \nabla_{\matrix{b}}J 
+
+  \end{aligned} \] 
+   <h4> A VERY important note for practical implementation: </h4>      
+   <p> $\matrix{W}$ and $\matrix{b}$ should be updated simultaneously during one iteration </p>      
+     </div>  
+        
+                     <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Iterative solution: gradient descent </p>
+  <p> To update $\matrix{W}$ and $\matrix{b}$ simultaneously, here is a pseudo code </p>  
+\[\begin{aligned}
+
+           \matrix{temp\_W} = \matrix{W} - \alpha \nabla_{\matrix{W}}J \\
+           \matrix{temp\_b} = \matrix{b} - \alpha \nabla_{\matrix{b}}J \\
+           \matrix{W} = \matrix{temp\_W}\\
+           \matrix{b} = \matrix{temp\_b} \\
+
+  \end{aligned} \] 
+      
+     </div>  
+        
+                         <div>
+      <h4>Solving the cost function minimization</h4>      
+       <p> Iterative solution: gradient descent </p>
+  <p> It is wrong if we do something like: </p>  
+\[\begin{aligned}
+
+           \matrix{temp\_W} = \matrix{W} - \alpha \nabla_{\matrix{W}}J \\
+            \matrix{W} = \matrix{temp\_W}\\
+           \matrix{temp\_b} = \matrix{b} - \alpha \nabla_{\matrix{b}}J \\
+           
+           \matrix{b} = \matrix{temp\_b} \\
+
+  \end{aligned} \] 
+      <p> Why? </p>   
+     </div>  
+        
+    <div>
+      <h4>A visualization of gradient descent</h4>    
+      <p> (for optimizing a single variable linear regression model)</p>
+      <a href="https://medium.com/swlh/from-animation-to-intuition-linear-regression-and-logistic-regression-f641a31e1caf" class="navigate-down">
+							<img width="750" height="500" data-src="https://cdn.glitch.global/760d0626-11ad-4e67-a78c-7fb6d57a1ae6/LR_GD.gif?v=1701775191187" alt="Down arrow">
+				</a>
+      </div>
+        
+              <div>
+           <h4> Practice time!!!🫸🫷</h4>    
+					<h4>Let's go to the this week's notebook 04(Gradient descent)! </h4>
+
+				</div>
+ 
+      <!--The practical: linear gression, GD in python -->
+           	<div>
+           <h4> Practice time!!!🫸🫷</h4>    
+					<h2>In folder "Notebooks-P2-ExtendedTopics" are the notebooks for linear regression with multiple features, polynomial regression, gradient descent with sklearn</h2>
+				</div>
+        
+          
+
+      
+
+      <!-- Summary of this lecture -->
+        <div>
+						<h2>Today we have learnt about: </h2>
+						<p >☝️What is supervised learning: learning with pairs of input and corresponding labeled output</p>
+						<p >✌️Regression: the output is numeric values</p>
+						<p >👌A simple regression model: linear regression</p>
+						<p >- parameterised by $w$ and $b$ 🎛️</p>
+						<p >- use square error loss function to construct cost function🔨</p>
+            <p >- use vectorization to implement the cost function🥞</p>
+          <p >- optimize the cost function w.r.t $w$ and $b$ using gradient descent⛷️</p>
+					</div>
+    
+        	<div >				
+					<p> You might find a linear model less expressive 🫡 </p>
+          <p> Below are the ideas covered in the linear model that are generalizable to our whole machine learning journey </p>
+          <p >- The function approximation view of machine learning: </p>
+          <p >-- We select a model family parameterised by some parameters</p>
+          <p >-- We select some loss function to construct cost function</p>
+          <p >-- We optimize the cost function w.r.t. model parameters</p>
+				</div>
+            
+        	<div >				
+					<h4> The function approximation view of machine learning 🫡</h4>
+          <p> In our simple linear regression model:</p>
+          <p >☝️ We select a model family parameterised by some parameters</p>
+          <p >-- (we selected a linear model parameterised by $w$ and $b$)</p>
+          <p >✌️ We select some loss function to construct cost function</p>
+           <p >-- (We chose the square error loss function)</p>
+          <p >👌 We optimize the cost function w.r.t. model parameters</p>
+          <p >-- (We used gradient descent to minimize the cost function w.r.t. $w$ and $b$)</p>
+				</div>
+                	<div >				
+					<h4> The function approximation view of machine learning 🫡</h4>
+          <p> To generalize from a simple linear model: </p>
+          <p >☝️We select a model family parameterised by some parameters</p>
+          <p >-- (we can select a more expressive model with more parameters)</p>
+          <p >✌️We select some loss function to construct cost function</p>
+           <p >-- (there are more loss functions to choose from)</p>
+          <p >👌We optimize the cost function w.r.t. model parameters</p>
+          <p >-- (there are more optimization strategies that are variants of gradient descent)</p>
+				</div>
+        
+        
+				<div >
+				
+					<p>
+          We'll see you next week same time same place! 🫡
+					</p>
+          <p>
+          Homework for this week: 
+            <br>
+            - Go through the recommended youtube videos 😈
+             <br>
+            - Finish ALL notebooks including reading and running all the cells and trying out the exercises 😈
+             <br>
+            - Start working on Henshin 😈
+					</p>
+				</div>
+        
+        
+                 <div>
+					<h3>Unit Assessment: <a href="https://moodle.arts.ac.uk/mod/resource/view.php?id=1370794">Final project brief🎤</a></h3>
+
+				</div>
+        
+                          <div>
+       <h4>References: </h4>       
+					<p><a href="https://www.cs.toronto.edu/~rgrosse/courses/csc311_f21">Introduction to Machine Learning </a></p>
+      <p><a href="https://www.coursera.org/learn/machine-learning">Supervised Machine Learning: Regression and Classification</a> </p>
+			</div>
+  
+
+  <div>Welcome 👩‍🎤🧑‍🎤👨‍🎤</div>
+
+  <div> First of all, don't forget to confirm your attendence on <a href="https://www.arts.ac.uk/study-at-ual/course-regulations/attendance-policy/attendance-monitoring"> SEAtS App!  </a></div>
+
+  <div>
+    <p>
+    We'll see you next week same time same place! 🫡
+    </p>
+
+    <p>
+    Homework for this week: 
+      <br>
+      Finish all notebooks including reading and running all the cells! 😈
+    </p>
+  </div>
+  
+</body>
+</html>
